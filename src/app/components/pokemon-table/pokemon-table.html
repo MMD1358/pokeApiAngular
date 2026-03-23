@@ -1,0 +1,39 @@
+<div class="page">
+  <div class="container">
+    <h1>Poke Explorer</h1>
+    <p class="subtitle">Discover and explore the entire Pokémon universe instantly.</p>
+
+    <input
+      class="search"
+      type="text"
+      placeholder="Search Pokémon by name or ID"
+      [(ngModel)]="searchValue"
+      (keyup.enter)="searchPokemon()"
+    />
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let pokemon of pokemons">
+          <td>
+            <a [routerLink]="['/pokemon', pokemon.id]">
+              {{ pokemon.id }}
+            </a>
+          </td>
+          <td>{{ pokemon.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="buttons">
+      <button (click)="previousPage()">Back 20</button>
+      <button (click)="nextPage()">Next 20</button>
+    </div>
+  </div>
+</div>

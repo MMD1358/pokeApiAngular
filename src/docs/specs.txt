@@ -1,1 +1,36 @@
 Archivo de especificaciones.
+
+Componentes:
+- PokemonTable para mostrar los pokemon, buscador y adelante y atrás
+    Utiliza Pokemon[]
+- PokemonCard para mostrar los datos del pokemon (nombre, foto, sonido, tipo, peso, altura, sprites, movimientos)
+    Utiliza Pokemon
+- PokemonMovement para mostrar los datos de los movimientos (nombre, poder, precisión, pp, prioridad)
+    Utiliza Movement[]
+- PokemonType para mostrar los tipos por sprite (tercera generación)
+    Utiliza string[] (tipos)
+
+Servicios:
+- Servicio PokeApiService para traer tabla, pokemon y movimientos
+  Contiene:
+- getPokemonList()
+- getPokemonByName(name)
+- getPokemonMovements(name)
+
+Modelos:
+- pokemon.model.ts
+    id
+    name
+    picture
+    cry
+    types
+    weight
+    height
+    sprites
+    movements
+- movement.model.ts
+    name
+    power
+    accuracy
+    pp
+    priority
