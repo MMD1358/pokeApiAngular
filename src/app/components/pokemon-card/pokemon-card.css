@@ -1,0 +1,125 @@
+.page {
+  background-color: #0f172a;
+  min-height: 100vh;
+  color: white;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.container {
+  background-color: #1e293b;
+  width: 1000px;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+.picture {
+  display: block;
+  margin: 20px auto;
+  width: 220px;
+}
+
+audio {
+  display: block;
+  margin: 20px auto;
+}
+
+.info {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.section {
+  margin-top: 30px;
+}
+
+.types {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.type {
+  background-color: #334155;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.sprites {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sprite {
+  background-color: #334155;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  width: 200px;
+
+  border: 2px solid #475569;
+  transition: all 0.25s ease;
+}
+
+.sprite:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 0 12px rgba(147, 197, 253, 0.7);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.sprite.shiny {
+  position: relative;
+  overflow: hidden;
+}
+
+.sprite.shiny::after {
+  content: '';
+  position: absolute;
+  top: -90px;
+  right: -90px;
+  width: 260px;
+  height: 260px;
+
+  background: radial-gradient(
+    circle,
+    rgba(250, 204, 21, 0.35) 0%,
+    rgba(250, 204, 21, 0.18) 25%,
+    rgba(250, 204, 21, 0.08) 45%,
+    rgba(250, 204, 21, 0.03) 60%,
+    transparent 75%
+  );
+
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.sprite.shiny:hover {
+  border-color: #fde047;
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.9);
+}
+
+.sprite img {
+  width: 80px;
+  height: 80px;
+}
+
+.movements {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.message {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}

@@ -6,9 +6,9 @@
     <input
       class="search"
       type="text"
-      placeholder="Search Pokémon by name or ID"
-      [(ngModel)]="searchValue"
-      (keyup.enter)="searchPokemon()"
+      placeholder="Search Pokémon by name"
+      [value]="searchValue()"
+      (input)="updateSearch($any($event.target).value)"
     />
 
     <table>
@@ -20,7 +20,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let pokemon of pokemons">
+        <tr *ngFor="let pokemon of pokemons()">
           <td>
             <a [routerLink]="['/pokemon', pokemon.id]">
               {{ pokemon.id }}
@@ -32,7 +32,7 @@
     </table>
 
     <div class="buttons">
-      <button (click)="previousPage()">Back 20</button>
+      <button (click)="previousPage()" [disabled]="!hasPrevious()">Back 20</button>
       <button (click)="nextPage()">Next 20</button>
     </div>
   </div>

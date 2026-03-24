@@ -34,3 +34,6 @@ Modelos:
     accuracy
     pp
     priority
+- pokemon-type.model.ts
+    name
+    sprite
