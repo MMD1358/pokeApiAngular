@@ -1,13 +1,12 @@
 <div class="page">
   <div class="container" *ngIf="!loading() && pokemon() as pokemon">
-    <h1>{{ pokemon.name | titlecase }}</h1>
+    <h1>{{ pokemon.name | titlecase }} / #{{ pokemon.id | number: '3.0-0' }}</h1>
 
     <img class="picture" [src]="pokemon.picture" [alt]="pokemon.name" />
 
     <audio controls [src]="pokemon.cry"></audio>
 
     <div class="info">
-      <p><strong>ID:</strong> {{ pokemon.id }}</p>
       <p>
         <strong>Peso:</strong>
         {{ pokemon.weight / 10 | number: '1.1-1' }} kg
@@ -31,11 +30,7 @@
     <div class="section">
       <h2>Sprites</h2>
       <div class="sprites">
-        <div
-          class="sprite"
-          *ngFor="let sprite of pokemon.sprites"
-          [class.shiny]="sprite.name.includes('shiny')"
-        >
+        <div class="sprite" *ngFor="let sprite of pokemon.sprites" [class.shiny]="isShiny(sprite)">
           <p>{{ getSpriteLabel(sprite.name) }}</p>
           <img [src]="sprite.image" [alt]="sprite.name" />
         </div>

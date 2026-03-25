@@ -35,6 +35,10 @@ export class PokemonCard implements OnInit {
     }
   }
 
+  isShiny(sprite: any): boolean {
+    return sprite.name?.includes('shiny');
+  }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
 

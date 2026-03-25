@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { Pokemon } from '../../services/models/pokemon.model';
+import { PokemonList } from '../../services/models/pokemon.model';
 import { PokeApiService } from '../../services/poke-api-service';
 
 @Component({
@@ -15,8 +15,8 @@ import { PokeApiService } from '../../services/poke-api-service';
 export class PokemonTable implements OnInit {
   private pokeApiService = inject(PokeApiService);
 
-  pokemons = signal<Pokemon[]>([]);
-  allPokemons = signal<Pokemon[]>([]);
+  pokemons = signal<PokemonList[]>([]);
+  allPokemons = signal<PokemonList[]>([]);
   searchValue = signal('');
 
   offset = signal(0);

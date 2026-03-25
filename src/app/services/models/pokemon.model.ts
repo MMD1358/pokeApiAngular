@@ -1,9 +1,11 @@
 import { PokemonType } from './pokemon-type.model';
 
 export interface PokemonList {
+  id: number;
   name: string;
   url: string;
 }
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -30,7 +32,7 @@ export interface PokemonMovement {
   url: string;
 }
 
-export interface Root {
+export interface PokemonDetailResponse {
   id: number;
   name: string;
   height: number;
