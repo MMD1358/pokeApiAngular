@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Pokemon } from '../../services/models/pokemon.model';
 import { PokeApiService } from '../../services/poke-api-service';
 import { PokemonTypeChipComponent } from '../pokemon-type/pokemon-type';
+import { loadPokemon } from './load-pokemon';
 
 @Component({
   selector: 'app-pokemon-card',
@@ -12,13 +12,15 @@ import { PokemonTypeChipComponent } from '../pokemon-type/pokemon-type';
   templateUrl: './pokemon-card.html',
   styleUrl: './pokemon-card.css',
 })
-export class PokemonCard implements OnInit {
+export class PokemonCard {
   private route = inject(ActivatedRoute);
   private pokeApiService = inject(PokeApiService);
 
-  pokemon = signal<Pokemon | null>(null);
-  loading = signal(true);
-  error = signal(false);
+  private state = loadPokemon(this.route, this.pokeApiService);
+
+  pokemon = this.state.pokemon;
+  loading = this.state.loading;
+  error = this.state.error;
 
   getSpriteLabel(name: string): string {
     switch (name) {
@@ -59,28 +61,7 @@ export class PokemonCard implements OnInit {
     return Math.min((value / maxStat) * 100, 100);
   }
 
-  isShiny(sprite: any): boolean {
-    return sprite.name?.includes('shiny');
-  }
-
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-
-    if (!id) {
-      this.error.set(true);
-      this.loading.set(false);
-      return;
-    }
-
-    this.pokeApiService.getPokemonByName(id).subscribe({
-      next: (data) => {
-        this.pokemon.set(data);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.error.set(true);
-        this.loading.set(false);
-      },
-    });
+  isShiny(sprite: { name?: string } | null | undefined): boolean {
+    return sprite?.name?.includes('shiny') ?? false;
   }
 }

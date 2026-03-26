@@ -20,14 +20,16 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let pokemon of pokemons()">
-          <td>
-            <a [routerLink]="['/pokemon', pokemon.id]">
-              {{ pokemon.id }}
-            </a>
-          </td>
-          <td>{{ pokemon.name }}</td>
-        </tr>
+        @for (pokemon of pokemons(); track pokemon.id) {
+          <tr>
+            <td>
+              <a [routerLink]="['/pokemon', pokemon.id]">
+                {{ pokemon.id }}
+              </a>
+            </td>
+            <td>{{ pokemon.name }}</td>
+          </tr>
+        }
       </tbody>
     </table>
 

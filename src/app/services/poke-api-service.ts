@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { PokemonListResponse } from '../services/models/pokemon-list-response.model';
 import { PokemonType, PokemonTypeKey } from '../services/models/pokemon-type.model';
 import {
@@ -12,6 +12,19 @@ import {
   PokemonStat,
   SPRITE_KEYS,
 } from '../services/models/pokemon.model';
+
+interface PokemonTypeApiResponse {
+  id: number;
+  name: string;
+  sprites?: {
+    'generation-iii'?: {
+      emerald?: {
+        name_icon: string | null;
+        symbol_icon: string | null;
+      };
+    };
+  };
+}
 
 @Injectable({
   providedIn: 'root',
@@ -36,34 +49,36 @@ export class PokeApiService {
 
   getPokemonByName(name: string): Observable<Pokemon> {
     return this.#http.get<PokemonDetailResponse>(`${this.apiUrl}/${name.toLowerCase()}`).pipe(
-      map((pokemon) => ({
-        id: pokemon.id,
-        name: pokemon.name,
-        picture: pokemon.sprites.other['official-artwork'].front_default ?? '',
-        cry: pokemon.cries.latest ?? '',
-        weight: pokemon.weight,
-        height: pokemon.height,
-        types: this.mapTypes(pokemon),
-        sprites: this.mapSprites(pokemon),
-        movements: this.mapMovements(pokemon),
-        stats: this.mapStats(pokemon),
-      })),
+      switchMap((pokemon) =>
+        this.mapTypes(pokemon).pipe(
+          map((types) => ({
+            id: pokemon.id,
+            name: pokemon.name,
+            picture: pokemon.sprites.other['official-artwork'].front_default ?? '',
+            cry: pokemon.cries.latest ?? '',
+            weight: pokemon.weight,
+            height: pokemon.height,
+            types,
+            sprites: this.mapSprites(pokemon),
+            movements: this.mapMovements(pokemon),
+            stats: this.mapStats(pokemon),
+          })),
+        ),
+      ),
     );
   }
 
-  private mapTypes(pokemon: PokemonDetailResponse): PokemonType[] {
-    return pokemon.types.map((typeInfo) => {
-      const typeName = typeInfo.type.name as PokemonTypeKey;
+  private mapTypes(pokemon: PokemonDetailResponse): Observable<PokemonType[]> {
+    const typeRequests = pokemon.types.map((typeInfo) =>
+      this.#http.get<PokemonTypeApiResponse>(typeInfo.type.url).pipe(
+        map((typeResponse) => ({
+          name: typeInfo.type.name as PokemonTypeKey,
+          icon: typeResponse.sprites?.['generation-iii']?.emerald?.name_icon ?? '',
+        })),
+      ),
+    );
 
-      return {
-        name: typeName,
-        icon: this.getTypeIconUrl(typeName),
-      };
-    });
-  }
-
-  private getTypeIconUrl(type: PokemonTypeKey): string {
-    return `assets/types/${type}.png`;
+    return forkJoin(typeRequests);
   }
 
   private mapSprites(pokemon: PokemonDetailResponse): PokemonSprite[] {
