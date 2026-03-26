@@ -16,6 +16,7 @@ export interface Pokemon {
   types: PokemonType[];
   sprites: PokemonSprite[];
   movements: PokemonMovement[];
+  stats: PokemonStat[];
 }
 
 export const SPRITE_KEYS = ['front_default', 'back_default', 'front_shiny', 'back_shiny'] as const;
@@ -32,6 +33,12 @@ export interface PokemonMovement {
   url: string;
 }
 
+export interface PokemonStat {
+  name: string;
+  baseStat: number;
+  effort: number;
+}
+
 export interface PokemonDetailResponse {
   id: number;
   name: string;
@@ -41,6 +48,7 @@ export interface PokemonDetailResponse {
   sprites: Sprites;
   types: Type[];
   moves: MoveElement[];
+  stats: Stat3[];
 }
 
 export interface Cries {
@@ -53,6 +61,28 @@ export interface Sprites {
   front_shiny: string | null;
   back_shiny: string | null;
   other: Other;
+  versions?: Versions;
+}
+
+export interface Versions {
+  'generation-iii'?: {
+    emerald?: {
+      front_default: string | null;
+      front_shiny: string | null;
+    };
+    'firered-leafgreen'?: {
+      front_default: string | null;
+      back_default: string | null;
+      front_shiny: string | null;
+      back_shiny: string | null;
+    };
+    'ruby-sapphire'?: {
+      front_default: string | null;
+      back_default: string | null;
+      front_shiny: string | null;
+      back_shiny: string | null;
+    };
+  };
 }
 
 export interface Other {
@@ -74,4 +104,15 @@ export interface MoveElement {
     name: string;
     url: string;
   };
+}
+
+export interface Stat3 {
+  base_stat: number;
+  effort: number;
+  stat: Stat4;
+}
+
+export interface Stat4 {
+  name: string;
+  url: string;
 }

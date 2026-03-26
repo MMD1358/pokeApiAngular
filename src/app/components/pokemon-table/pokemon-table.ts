@@ -66,7 +66,7 @@ export class PokemonTable implements OnInit {
     const filteredPokemons = this.allPokemons().filter((pokemon) =>
       pokemon.name.toLowerCase().includes(text),
     );
-
+    console.log(this.pokemons(), this.allPokemons());
     this.pokemons.set(filteredPokemons);
   }
 }

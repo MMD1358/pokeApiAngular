@@ -1,0 +1,78 @@
+.type-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: capitalize;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+  border: 1px solid rgb(255 255 255 / 0.18);
+}
+
+.type-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.type-chip[data-type='normal'] {
+  background: #a8a77a;
+}
+.type-chip[data-type='fire'] {
+  background: #ee8130;
+}
+.type-chip[data-type='water'] {
+  background: #6390f0;
+}
+.type-chip[data-type='electric'] {
+  background: #f7d02c;
+  color: #333;
+}
+.type-chip[data-type='grass'] {
+  background: #7ac74c;
+}
+.type-chip[data-type='ice'] {
+  background: #96d9d6;
+  color: #333;
+}
+.type-chip[data-type='fighting'] {
+  background: #c22e28;
+}
+.type-chip[data-type='poison'] {
+  background: #a33ea1;
+}
+.type-chip[data-type='ground'] {
+  background: #e2bf65;
+  color: #333;
+}
+.type-chip[data-type='flying'] {
+  background: #a98ff3;
+}
+.type-chip[data-type='psychic'] {
+  background: #f95587;
+}
+.type-chip[data-type='bug'] {
+  background: #a6b91a;
+}
+.type-chip[data-type='rock'] {
+  background: #b6a136;
+}
+.type-chip[data-type='ghost'] {
+  background: #735797;
+}
+.type-chip[data-type='dragon'] {
+  background: #6f35fc;
+}
+.type-chip[data-type='dark'] {
+  background: #705746;
+}
+.type-chip[data-type='steel'] {
+  background: #b7b7ce;
+  color: #333;
+}
+.type-chip[data-type='fairy'] {
+  background: #d685ad;
+}

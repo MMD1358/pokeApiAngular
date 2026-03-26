@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { Pokemon } from '../../services/models/pokemon.model';
 import { PokeApiService } from '../../services/poke-api-service';
+import { PokemonTypeChipComponent } from '../pokemon-type/pokemon-type';
 
 @Component({
   selector: 'app-pokemon-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PokemonTypeChipComponent],
   templateUrl: './pokemon-card.html',
   styleUrl: './pokemon-card.css',
 })
@@ -33,6 +33,30 @@ export class PokemonCard implements OnInit {
       default:
         return name;
     }
+  }
+
+  getStatLabel(name: string): string {
+    switch (name) {
+      case 'hp':
+        return 'HP';
+      case 'attack':
+        return 'Ataque';
+      case 'defense':
+        return 'Defensa';
+      case 'special-attack':
+        return 'Ataque especial';
+      case 'special-defense':
+        return 'Defensa especial';
+      case 'speed':
+        return 'Velocidad';
+      default:
+        return name;
+    }
+  }
+
+  getStatPercentage(value: number): number {
+    const maxStat = 255;
+    return Math.min((value / maxStat) * 100, 100);
   }
 
   isShiny(sprite: any): boolean {

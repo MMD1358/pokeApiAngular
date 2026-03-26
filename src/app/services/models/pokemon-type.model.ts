@@ -20,5 +20,5 @@ export type PokemonTypeKey =
 
 export interface PokemonType {
   name: PokemonTypeKey;
-  sprite: PokemonTypeKey;
+  icon: string;
 }

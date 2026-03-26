@@ -21,18 +21,35 @@
     <div class="section">
       <h2>Types</h2>
       <div class="types">
-        <div class="type" *ngFor="let type of pokemon.types">
-          {{ type.name }}
-        </div>
+        <app-pokemon-type-chip *ngFor="let type of pokemon.types" [type]="type">
+        </app-pokemon-type-chip>
       </div>
     </div>
 
     <div class="section">
       <h2>Sprites</h2>
       <div class="sprites">
-        <div class="sprite" *ngFor="let sprite of pokemon.sprites" [class.shiny]="isShiny(sprite)">
-          <p>{{ getSpriteLabel(sprite.name) }}</p>
-          <img [src]="sprite.image" [alt]="sprite.name" />
+        @for (sprite of pokemon.sprites; track sprite.name) {
+          <div class="sprite" [class.shiny]="isShiny(sprite)">
+            <p>{{ getSpriteLabel(sprite.name) }}</p>
+            <img [src]="sprite.image" [alt]="sprite.name" />
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Stats</h2>
+
+      <div class="stats-card">
+        <div class="stat-item" *ngFor="let stat of pokemon.stats">
+          <div class="stat-name">{{ getStatLabel(stat.name) }}</div>
+
+          <div class="stat-bar">
+            <div class="stat-fill" [style.width.%]="getStatPercentage(stat.baseStat)"></div>
+          </div>
+
+          <div class="stat-value">{{ stat.baseStat }}</div>
         </div>
       </div>
     </div>
@@ -47,7 +64,10 @@
     </div>
   </div>
 
-  <div class="message" *ngIf="loading()">Loading Pokémon...</div>
-
-  <div class="message" *ngIf="error()">Pokémon not found.</div>
+  @if (loading()) {
+    <div class="message">Loading Pokémon...</div>
+  }
+  @if (error()) {
+    <div class="message">Pokémon not found.</div>
+  }
 </div>
