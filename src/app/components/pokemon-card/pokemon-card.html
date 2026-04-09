@@ -43,13 +43,17 @@
 
       <div class="stats-card">
         <div class="stat-item" *ngFor="let stat of pokemon.stats">
-          <div class="stat-name">{{ getStatLabel(stat.name) }}</div>
+          <div class="stat-name">
+            {{ getStatLabel(stat.name) }}
+
+            <span class="ev-chip" *ngIf="stat.effort > 0"> +{{ stat.effort }} EV </span>
+          </div>
 
           <div class="stat-bar">
             <div class="stat-fill" [style.width.%]="getStatPercentage(stat.baseStat)"></div>
           </div>
 
-          <div class="stat-value">{{ stat.baseStat }}</div>
+          <div class="stat-value">{{ stat.baseStat }} / EV: {{ stat.effort }}</div>
         </div>
       </div>
     </div>
