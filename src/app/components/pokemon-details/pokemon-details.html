@@ -1,0 +1,31 @@
+<details class="movement-accordion" (toggle)="onToggle($event)">
+  <summary class="movement-header">
+    {{ movementName() }}
+  </summary>
+
+  <div class="movement-body">
+    @if (loading()) {
+      <p>Cargando movimiento...</p>
+    }
+
+    @if (error()) {
+      <p>No se pudo cargar la información del movimiento.</p>
+    }
+
+    @if (!loading() && !error()) {
+      @if (movement(); as move) {
+        <div class="movement-grid">
+          <p><strong>Power:</strong> {{ formatValue(move.power) }}</p>
+          <p><strong>Accuracy:</strong> {{ formatValue(move.accuracy) }}</p>
+          <p><strong>PP:</strong> {{ formatValue(move.pp) }}</p>
+          <p><strong>Priority:</strong> {{ move.priority }}</p>
+        </div>
+
+        <div class="movement-details">
+          <strong>Details</strong>
+          <p>{{ move.details }}</p>
+        </div>
+      }
+    }
+  </div>
+</details>

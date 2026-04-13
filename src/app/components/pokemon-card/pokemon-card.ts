@@ -3,6 +3,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Pokemon } from '../../services/models/pokemon.model';
 import { PokeApiService } from '../../services/poke-api-service';
+import { PokemonDetailsComponent } from '../pokemon-details/pokemon-details';
 import { PokemonMovementComponent } from '../pokemon-movement/pokemon-movement';
 import { PokemonTypeChipComponent } from '../pokemon-type/pokemon-type';
 import { IsShinyPipe } from './pipes/is-shiny.pipe';
@@ -53,6 +54,7 @@ function loadPokemon(route: ActivatedRoute, pokeApiService: PokeApiService) {
     CommonModule,
     PokemonTypeChipComponent,
     PokemonMovementComponent,
+    PokemonDetailsComponent,
     SpriteLabelPipe,
     StatLabelPipe,
     StatPercentagePipe,

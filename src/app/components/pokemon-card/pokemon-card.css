@@ -66,7 +66,6 @@ audio {
   border-radius: 10px;
   text-align: center;
   width: 200px;
-
   border: 2px solid #475569;
   transition: all 0.25s ease;
 }
@@ -89,7 +88,6 @@ audio {
   right: -90px;
   width: 260px;
   height: 260px;
-
   background: radial-gradient(
     circle,
     rgba(250, 204, 21, 0.35) 0%,
@@ -98,7 +96,6 @@ audio {
     rgba(250, 204, 21, 0.03) 60%,
     transparent 75%
   );
-
   filter: blur(8px);
   pointer-events: none;
 }
@@ -191,16 +188,30 @@ audio {
   font-size: 11px;
   font-weight: bold;
   border-radius: 999px;
-
   background: linear-gradient(135deg, #f59e0b, #ef4444);
   color: #0f172a;
-
   box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
 }
 
 .movements-list {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.subsection-title {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  text-align: center;
+  color: #cbd5e1;
+  font-size: 18px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 12px;
 }
 

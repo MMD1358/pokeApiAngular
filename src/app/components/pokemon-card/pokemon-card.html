@@ -73,6 +73,14 @@
           }
         </div>
 
+        <h3 class="subsection-title">Movement details</h3>
+
+        <div class="movements-list">
+          @for (movement of paginatedMovements(); track movement.name) {
+            <app-pokemon-details [movementName]="movement.name"></app-pokemon-details>
+          }
+        </div>
+
         @if (totalMovementPages() > 1) {
           <div class="pagination">
             <button
