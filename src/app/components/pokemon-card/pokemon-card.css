@@ -197,3 +197,35 @@ audio {
 
   box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
 }
+
+.movements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  background-color: #334155;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: #93c5fd;
+  box-shadow: 0 0 8px rgba(147, 197, 253, 0.35);
+  transform: translateY(-1px);
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #cbd5e1;
+  font-weight: bold;
+}

@@ -1,76 +1,107 @@
 <div class="page">
-  <div class="container" *ngIf="!loading() && pokemon() as pokemon">
-    <h1>{{ pokemon.name | titlecase }} / #{{ pokemon.id | number: '3.0-0' }}</h1>
+  @if (!loading() && pokemon(); as pokemon) {
+    <div class="container">
+      <h1>{{ pokemon.name | titlecase }} / #{{ pokemon.id | number: '3.0-0' }}</h1>
 
-    <img class="picture" [src]="pokemon.picture" [alt]="pokemon.name" />
+      <img class="picture" [src]="pokemon.picture" [alt]="pokemon.name" />
 
-    <audio controls [src]="pokemon.cry"></audio>
+      <audio controls [src]="pokemon.cry"></audio>
 
-    <div class="info">
-      <p>
-        <strong>Peso:</strong>
-        {{ pokemon.weight / 10 | number: '1.1-1' }} kg
-      </p>
+      <div class="info">
+        <p>
+          <strong>Peso:</strong>
+          {{ pokemon.weight / 10 | number: '1.1-1' }} kg
+        </p>
 
-      <p>
-        <strong>Altura:</strong>
-        {{ pokemon.height / 10 | number: '1.1-1' }} m
-      </p>
-    </div>
-
-    <div class="section">
-      <h2>Types</h2>
-      <div class="types">
-        <app-pokemon-type-chip *ngFor="let type of pokemon.types" [type]="type">
-        </app-pokemon-type-chip>
+        <p>
+          <strong>Altura:</strong>
+          {{ pokemon.height / 10 | number: '1.1-1' }} m
+        </p>
       </div>
-    </div>
 
-    <div class="section">
-      <h2>Sprites</h2>
-      <div class="sprites">
-        @for (sprite of pokemon.sprites; track sprite.name) {
-          <div class="sprite" [class.shiny]="isShiny(sprite)">
-            <p>{{ getSpriteLabel(sprite.name) }}</p>
-            <img [src]="sprite.image" [alt]="sprite.name" />
+      <div class="section">
+        <h2>Types</h2>
+        <div class="types">
+          @for (type of pokemon.types; track type) {
+            <app-pokemon-type-chip [type]="type"></app-pokemon-type-chip>
+          }
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Sprites</h2>
+        <div class="sprites">
+          @for (sprite of pokemon.sprites; track sprite.name) {
+            <div class="sprite" [class.shiny]="sprite | isShiny">
+              <p>{{ sprite.name | spriteLabel }}</p>
+              <img [src]="sprite.image" [alt]="sprite.name" />
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Stats</h2>
+
+        <div class="stats-card">
+          @for (stat of pokemon.stats; track stat.name) {
+            <div class="stat-item">
+              <div class="stat-name">
+                {{ stat.name | statLabel }}
+
+                @if (stat.effort > 0) {
+                  <span class="ev-chip"> +{{ stat.effort }} EV </span>
+                }
+              </div>
+
+              <div class="stat-bar">
+                <div class="stat-fill" [style.width.%]="stat.baseStat | statPercentage"></div>
+              </div>
+
+              <div class="stat-value">{{ stat.baseStat }} / {{ statMax }}</div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Movements</h2>
+
+        <div class="movements-list">
+          @for (movement of paginatedMovements(); track movement.name) {
+            <app-pokemon-movement [movementName]="movement.name"></app-pokemon-movement>
+          }
+        </div>
+
+        @if (totalMovementPages() > 1) {
+          <div class="pagination">
+            <button
+              type="button"
+              (click)="previousMovementPage()"
+              [disabled]="currentMovementPage() === 0"
+            >
+              Anterior
+            </button>
+
+            <span> Página {{ currentMovementPage() + 1 }} de {{ totalMovementPages() }} </span>
+
+            <button
+              type="button"
+              (click)="nextMovementPage()"
+              [disabled]="currentMovementPage() >= totalMovementPages() - 1"
+            >
+              Siguiente
+            </button>
           </div>
         }
       </div>
     </div>
-
-    <div class="section">
-      <h2>Stats</h2>
-
-      <div class="stats-card">
-        <div class="stat-item" *ngFor="let stat of pokemon.stats">
-          <div class="stat-name">
-            {{ getStatLabel(stat.name) }}
-
-            <span class="ev-chip" *ngIf="stat.effort > 0"> +{{ stat.effort }} EV </span>
-          </div>
-
-          <div class="stat-bar">
-            <div class="stat-fill" [style.width.%]="getStatPercentage(stat.baseStat)"></div>
-          </div>
-
-          <div class="stat-value">{{ stat.baseStat }} / EV: {{ stat.effort }}</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Movements</h2>
-      <ul class="movements">
-        <li *ngFor="let movement of pokemon.movements">
-          {{ movement.name }}
-        </li>
-      </ul>
-    </div>
-  </div>
+  }
 
   @if (loading()) {
     <div class="message">Loading Pokémon...</div>
   }
+
   @if (error()) {
     <div class="message">Pokémon not found.</div>
   }
